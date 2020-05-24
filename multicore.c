@@ -44,8 +44,8 @@ enum {
 
 static void print_usage(const char* program_name) {
   printf("%s [EAL options] --"
-    " [--help] |"
-    " [--busy-cycles NUM_OF_BUSY_CYCLES]\n\n"
+    " [--help] |\n"
+    " [--busy-cycles NUM_OF_BUSY_CYCLES]\n"
 	" [--soft-lb]\n"
 	" [--hash]\n\n"
 
@@ -115,7 +115,7 @@ static const struct rte_eth_conf port_conf_default = {
     .lpbk_mode = 0,
     .rxmode =
         {
-            .mq_mode        = ETH_MQ_RX_RSS, /* Use none of CDB, RSS or VMDQ */
+            .mq_mode = ETH_MQ_RX_RSS, /* Use none of CDB, RSS or VMDQ */
         },
     .txmode =
         {
@@ -470,7 +470,7 @@ batch_load_balancer(uint16_t nb_cores, struct rte_ring **rx_rings, struct rte_ri
 		}
 	}
 
-	printf("core %u: rx: %lu  tx: %lu\n", lcore_id, rx_stats, tx_stats);
+	printf("LOAD BALANCER (%i): rx: %lu  tx: %lu\n", lcore_id, rx_stats, tx_stats);
 
 	return 0;
 }
@@ -496,7 +496,6 @@ hash_load_balancer(uint16_t nb_cores, struct rte_ring **rx_rings, struct rte_rin
 
 	/* Run until the application quits or is killed. */
 	while (!quit) {
-		
 		uint16_t nb_rx = rte_eth_rx_burst(0, 0, bufs[0], BURST_SIZE);
 		rx_stats += nb_rx;
 
@@ -605,6 +604,7 @@ main(int argc, char *argv[])
 	unsigned lcore_id;
 
 	if (soft_lb) {
+		printf("Software LB\n");
 		struct rte_ring **rx_rings, **tx_rings;
 		struct ring_pair *ring_pairs;
 
