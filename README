@@ -1,0 +1,10 @@
+Examples on how to run:
+
+# RSS
+./examples/dpdk-multicore -l 1-2 -n 4 -w 41:00.0 -- 
+
+# Software LB with rond-robin batches
+./examples/dpdk-multicore -l 1-2 -n 4 -w 41:00.0 -- --soft-lb
+
+# Software LB with 5-tuple hash
+./examples/dpdk-multicore -l 1-2 -n 4 -w 41:00.0 -- --soft-lb --hash
